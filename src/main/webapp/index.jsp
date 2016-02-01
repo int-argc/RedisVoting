@@ -69,7 +69,7 @@ public void makeDivCard(PrintWriter out, String $name, int $score) {
                    var entry = $(this).prevAll('.name').text();
                    console.log("voted for " + entry);
                    $.ajax({
-                       url: 'Vote.php',
+                       url: 'Vote.jsp',
                        type: "POST",
                        data: { entryName: entry }  // wala laman entry?
                    }).done(function() {

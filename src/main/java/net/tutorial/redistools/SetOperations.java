@@ -73,20 +73,20 @@ public class SetOperations {
 		return s;
 	}
 
-	public boolean hasContent() {
-		Jedis jedis = null;
-		long s;
-		try {
-			jedis = pool.getResource();
-			s = jedis.zcard(keyname);
-		} finally {
-			jedis.close();
-		}
-
-		if (s != 0) {
-			return true;
-		}
-		return false;
-	}
+	// public boolean hasContent() {
+	// 	Jedis jedis = null;
+	// 	long s;
+	// 	try {
+	// 		jedis = pool.getResource();
+	// 		s = jedis.zcard(keyname);
+	// 	} finally {
+	// 		jedis.close();
+	// 	}
+	//
+	// 	if (s != 0) {
+	// 		return true;
+	// 	}
+	// 	return false;
+	// }
 
 }

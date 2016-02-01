@@ -58,9 +58,6 @@ public void makeDivCard(PrintWriter out, String $name, int $score) {
             makeDivCard(new PrintWriter((Writer)out, true), entry, score);
 		}
 
-        // for (int i = 0; i < 10 ; i++) {
-        //     out.println("<i>i am </i>" + i);
-        // }
 %>
 	</div>
 
@@ -72,7 +69,7 @@ public void makeDivCard(PrintWriter out, String $name, int $score) {
                    $.ajax({
                        url: 'Vote.jsp',
                        type: "POST",
-                       data: { entryName: entry }  // wala laman entry?
+                       data: { entryName: entry }
                    }).done(function() {
                        window.location.reload();
                    });

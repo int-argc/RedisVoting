@@ -1,7 +1,7 @@
 
+<%@page import="redistools.SetOperations"%>
 <%
 
-<%@page import="redistools.SetOperations"%>
 
 String entryName = request.getParameter("entryName");
 

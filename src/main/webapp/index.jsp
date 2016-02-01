@@ -29,6 +29,7 @@ public void makeDivCard(PrintWriter out, String $name, int $score) {
         <meta charset="utf-8">
         <title>Hello</title>
         <link rel="stylesheet" href="styles.css" charset="utf-8">
+        <script src="jquery-1.10.2.min.js" charset="utf-8"></script>
     </head>
     <body>
         <%

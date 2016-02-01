@@ -11,6 +11,7 @@ repositories {
 }
 
 dependencies {
+    providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
     compile 'org.apache.commons:commons-pool2:2.0'
     compile 'redis.clients:jedis:2.8.0'
 }

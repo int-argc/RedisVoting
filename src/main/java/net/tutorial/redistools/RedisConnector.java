@@ -1,48 +1,89 @@
 package redistools;
 
+import java.util.Map;
+
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 public class RedisConnector {
 
-	private String ipadd;
 	private int port;
 	private String host;
-	private JedisPool pool;
+	// private JedisPool pool;
 	private String password;
+	private Jedis client;
+	private String name;
 
 	public RedisConnector() {
-		host = configHost();
-		pool = new JedisPool(new JedisPoolConfig(), host);
+		// host = configHost();
+		try {
+			configParameters();
+		} catch(Exception e) {
+			System.out.println("ERROR IN RedisConnector.java");
+			e.printStackTrace(System.err);
+		}
+		// pool = new JedisPool(new JedisPoolConfig(), host);
 		// alt
-		Jedis j2 = new Jedis(host, port);
-		j2.auth(password);
+		System.out.println("hostname = " + this.host);
+		System.out.println("port = " + this.port);
+		System.out.println("pass = " + this.password);
+		this.client = new Jedis(this.host, this.port);
+		this.client.auth(this.password);
 
+	}
+
+	public Jedis getConnection() {
+		return client;
 	}
 
 	// public JedisPool getPool() {
 	// 	return pool;
 	// }
-	//
+
 	// private String configHost() {
 	// 	// do fix: use vcap services
 	// 	return "localhost";
 	//
 	// }
 
-	private void configServices() {
-		CloudEnvironment environment = new CloudEnvironment();
-		if ( environment.getServiceDataByLabels("redis").size() == 0 ) {
-			throw new Exception( "No Redis service is bund to this app!!" );
+	private void configParameters() throws Exception {
+		Map<String, String> env = System.getenv();
+
+		if (env.containsKey("VCAP_SERVICES")) {
+            // we are running on cloud foundry, let's grab the service details from vcap_services
+            JSONParser parser = new JSONParser();
+            JSONObject vcap = (JSONObject) parser.parse(env.get("VCAP_SERVICES"));
+            JSONObject service = null;
+
+            // We don't know exactly what the service is called, but it will contain "postgresql"
+            for (Object key : vcap.keySet()) {
+                String keyStr = (String) key;
+                if (keyStr.toLowerCase().contains("redis")) {
+                    service = (JSONObject) ((JSONArray) vcap.get(keyStr)).get(0);
+                    break;
+                }
+            }
+
+            if (service != null) {
+                JSONObject creds = (JSONObject) service.get("credentials");
+                this.name = (String) creds.get("name");
+                this.host = (String) creds.get("host");
+                long port = (Long) creds.get("port");
+				this.port = (int) port;
+                this.password = (String) creds.get("password");
+            } else {
+				throw new Exception("No Redis service found. Make sure you have bound the correct services to your app.");
+			}
+        } else {
+			throw new Exception("Environment Variable VCAP_SERVICES not found. Check your environment.");
 		}
 
-		Object[] info = new Object[3];
-		Map credential = (Map)((Map)environment.getServiceDataByLabels("redis").get(0)).get( "credentials" );
 
-		this.host = (String)credential.get( "host" );
-		this.port = (Integer)credential.get( "port" );
-		this.password = (String)credential.get( "password" );
 	}
 
 }

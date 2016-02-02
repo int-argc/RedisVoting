@@ -8,67 +8,41 @@ import redis.clients.jedis.JedisPool;
 public class SetOperations {
 
 	private String keyname;
-	private JedisPool pool;
+	private Jedis jedis;
 
 
 	public SetOperations(String keyname) {
 		this.keyname = keyname;
 		RedisConnector conn = new RedisConnector();
-		pool = conn.getPool();
+		// pool = conn.getPool();
+		this.jedis = conn.getConnection();
 	}
 
 	public void add(int score, String member) {
-		Jedis jedis = null;
-		try {
-			jedis = pool.getResource();
-			jedis.zadd(keyname, score, member);
-		} finally {
-			jedis.close();
-		}
+		jedis.zadd(keyname, score, member);
 	}
 
 	public int getScore(String member) {
-		Jedis jedis = null;
+		// Jedis jedis = null;
 		double score = -1;
-		try {
-			jedis = pool.getResource();
-			score = jedis.zscore(keyname, member);
-		} finally {
-			jedis.close();
-		}
+		score = jedis.zscore(keyname, member);
 
 		return (int)score;
 	}
 
 	public void incrementScore(String member) {
-		Jedis jedis = null;
-		try {
-			jedis = pool.getResource();
-			jedis.zincrby(keyname, 1, member);
-		} finally {
-			jedis.close();
-		}
+		// Jedis jedis = null;
+		jedis.zincrby(keyname, 1, member);
 	}
 
 	public void deleteSet() {
-		Jedis jedis = null;
-		try {
-			jedis = pool.getResource();
-			jedis.del(keyname);
-		} finally {
-			jedis.close();
-		}
+		jedis.del(keyname);
 	}
 
 	public Set<String> sortDesc() {
-		Jedis jedis = null;
+		// Jedis jedis = null;
 		Set<String> s = null;
-		try {
-			jedis = pool.getResource();
-			s = jedis.zrevrange(keyname, 0, -1);
-		} finally {
-			jedis.close();
-		}
+		s = jedis.zrevrange(keyname, 0, -1);
 
 		return s;
 	}

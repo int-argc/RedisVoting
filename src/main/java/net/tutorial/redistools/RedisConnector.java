@@ -10,10 +10,15 @@ public class RedisConnector {
 	private int port;
 	private String host;
 	private JedisPool pool;
+	private String password;
 	
 	public RedisConnector() {
 		host = configHost();
 		pool = new JedisPool(new JedisPoolConfig(), host);
+		// alt
+		Jedis j2 = new Jedis(host, port);
+		j2.auth(password);
+
 	}
 	
 	public JedisPool getPool() {
@@ -26,6 +31,18 @@ public class RedisConnector {
 		
 	}
 	
+	private void configHost2() {
+		CloudEnvironment environment = new CloudEnvironment();
+		if ( environment.getServiceDataByLabels("redis").size() == 0 ) {
+			throw new Exception( "No Redis service is bund to this app!!" );
+		}
 	
+		Object[] info = new Object[3];
+		Map credential = (Map)((Map)environment.getServiceDataByLabels("redis").get(0)).get( "credentials" );
+		
+		this.host = (String)credential.get( "host" );
+		this.port = (Integer)credential.get( "port" );
+		this.password = (String)credential.get( "password" );
+	}
 
 }

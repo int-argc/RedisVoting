@@ -6,6 +6,6 @@
 SetOperations so = (SetOperations)session.getAttribute("setoper");
 so.deleteSet();
 
-System.out.println("ResetList.jsp: Delete success!");
+// System.out.println("ResetList.jsp: Delete success!");
 response.sendRedirect("index.jsp");
 %>

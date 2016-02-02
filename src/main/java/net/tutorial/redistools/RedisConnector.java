@@ -20,36 +20,23 @@ public class RedisConnector {
 	private String name;
 
 	public RedisConnector() {
-		// host = configHost();
 		try {
 			configParameters();
 		} catch(Exception e) {
-			System.out.println("ERROR IN RedisConnector.java");
+			System.err.println("ERROR IN RedisConnector.java");
 			e.printStackTrace(System.err);
 		}
-		// pool = new JedisPool(new JedisPoolConfig(), host);
-		// alt
-		System.out.println("hostname = " + this.host);
-		System.out.println("port = " + this.port);
-		System.out.println("pass = " + this.password);
+		// System.out.println("hostname = " + this.host);
+		// System.out.println("port = " + this.port);
+		// System.out.println("pass = " + this.password);
 		this.client = new Jedis(this.host, this.port);
-		this.client.auth(this.password);
+		this.client.auth(this.password);	// authenticate with server
 
 	}
 
 	public Jedis getConnection() {
 		return client;
 	}
-
-	// public JedisPool getPool() {
-	// 	return pool;
-	// }
-
-	// private String configHost() {
-	// 	// do fix: use vcap services
-	// 	return "localhost";
-	//
-	// }
 
 	private void configParameters() throws Exception {
 		Map<String, String> env = System.getenv();

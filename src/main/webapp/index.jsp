@@ -10,7 +10,7 @@
 
 <!DOCTYPE html>
 <%!
-// initialize Jedis pool
+// initialize Jedis
 SetOperations so = new SetOperations("candidates");
 
 // function definitions
@@ -27,17 +27,15 @@ public void makeDivCard(PrintWriter out, String $name, int $score) {
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Hello</title>
+        <title>Redis Voting System</title>
         <link rel="stylesheet" href="styles.css" charset="utf-8">
-        <script src="jquery-1.10.2.min.js" charset="utf-8"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     </head>
     <body>
         <%
         session.setAttribute("setoper", so);
         %>
-        <h1>hello world! redis here we go!</h1>
-
-        <h1>Redis Voting System</h1>
+        <h1>Redis Voting System - Beta</h1>
 	<div id="navbar">
 		<a href="AddCandidate.jsp">Add candidate</a>
 		<a href="ResetList.jsp">Reset Candidate List</a>
@@ -45,13 +43,6 @@ public void makeDivCard(PrintWriter out, String $name, int $score) {
 
 	<div id="centerPane">
 <%
-		// if(so.hasContent()) {
-		// 	Set<String> candidates = so.sortDesc();
-		// 	for(String s : candidates) {
-		// 		out.println("s = " + s);
-		// 	}
-		// }
-
         Set<String> entries = so.sortDesc();
         for(String entry : entries) {
             int score = so.getScore(entry);
@@ -65,7 +56,7 @@ public void makeDivCard(PrintWriter out, String $name, int $score) {
         $(document).ready(function() {
                $("button").click(function() {
                    var entry = $(this).prevAll('.name').text();
-                   console.log("voted for " + entry);
+                //    console.log("voted for " + entry);
                    $.ajax({
                        url: 'Vote.jsp',
                        type: "POST",

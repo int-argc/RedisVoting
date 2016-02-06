@@ -14,9 +14,9 @@ public class RedisConnector {
 
 	private int port;
 	private String host;
-	// private JedisPool pool;
+	private JedisPool pool;
 	private String password;
-	private Jedis client;
+	// private Jedis client;
 	private String name;
 
 	public RedisConnector() {
@@ -26,16 +26,17 @@ public class RedisConnector {
 			System.err.println("ERROR IN RedisConnector.java");
 			e.printStackTrace(System.err);
 		}
+		pool = new JedisPool(new JedisPoolConfig(), this.host, this.port, 2000, this.password);	// timeout -1 ?
 		// System.out.println("hostname = " + this.host);
 		// System.out.println("port = " + this.port);
 		// System.out.println("pass = " + this.password);
-		this.client = new Jedis(this.host, this.port);
-		this.client.auth(this.password);	// authenticate with server
+		// this.client = new Jedis(this.host, this.port);
+		// this.client.auth(this.password);	// authenticate with server
 
 	}
 
-	public Jedis getConnection() {
-		return client;
+	public JedisPool getPool() {
+		return pool;
 	}
 
 	private void configParameters() throws Exception {

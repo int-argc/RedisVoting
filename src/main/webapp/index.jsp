@@ -2,9 +2,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%-- import redis connector and set operations --%>
-<%@page import="redistools.RedisConnector"%>
-<%@page import="redistools.SetOperations"%>
-<%@page import="servlet.*"%>
+<%@page import="tutorial.redistools.RedisConnector"%>
+<%@page import="tutorial.redistools.SetOperations"%>
+<%@page import="tutorial.servlet.*"%>
 <%@page import="java.util.*"%>
 <%@page import="javax.servlet.jsp.*"%>
 <%@page import="java.io.*"%>

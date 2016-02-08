@@ -4,6 +4,7 @@
 <%-- import redis connector and set operations --%>
 <%@page import="redistools.RedisConnector"%>
 <%@page import="redistools.SetOperations"%>
+<%@page import="servlet.*"%>
 <%@page import="java.util.*"%>
 <%@page import="javax.servlet.jsp.*"%>
 <%@page import="java.io.*"%>
@@ -38,7 +39,7 @@ public void makeDivCard(PrintWriter out, String $name, int $score) {
         <h1>Redis Voting System - Beta</h1>
 	<div id="navbar">
 		<a href="AddCandidate.jsp">Add candidate</a>
-		<a href="ResetList.jsp">Reset Candidate List</a>
+		<a href="ResetList">Reset Candidate List</a>
 	</div>
 
 	<div id="centerPane">
@@ -58,7 +59,7 @@ public void makeDivCard(PrintWriter out, String $name, int $score) {
                    var entry = $(this).prevAll('.name').text();
                 //    console.log("voted for " + entry);
                    $.ajax({
-                       url: 'Vote.jsp',
+                       url: 'Vote',
                        type: "POST",
                        data: { entryName: entry }
                    }).done(function() {

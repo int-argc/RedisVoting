@@ -6,7 +6,7 @@
 <title>Redis Voting System - Add Candidate</title>
 </head>
 <body>
-	<form action="AddEntry.jsp" method="post">
+	<form action="AddEntry" method="post">
 		Candidate Name: <input type="text" name="entryName" /> <br />
 		<input type="submit" /> <br />
 	</form>

@@ -19,9 +19,9 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
-jar {
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-    manifest {
-        attributes 'Main-Class': 'net.tutorial.Calculator'
-    }
-}
+// jar {
+//     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+//     manifest {
+//         attributes 'Main-Class': 'net.tutorial.Calculator'
+//     }
+// }

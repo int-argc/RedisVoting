@@ -19,7 +19,7 @@ public class SetTests {
     public void testIncrementAndScore() {
         clearSet();
         addData();
-        String entry = "A"
+        String entry = "A";
         int oldScore = so.getScore(entry);
         so.incrementScore(entry);
         assertEquals(oldScore + " 1 = " + (oldScore + 1), oldScore + 1, so.getScore(entry));
@@ -32,8 +32,9 @@ public class SetTests {
         addData();
         Set<String> rr = so.sortDesc();
         String[] expectedSet = ["B", "A", "C"];
-        for (int i = 0; i < rr.length; i++) {
-            assertEquals("position [" + i + "] should be " + expectedSet[i], expectedSet[i], rr.get(i));    // does set have get method?
+        int i = 0;
+        for (String s : rr) {
+            assertEquals("position [" + i + "] should be " + expectedSet[i], expectedSet[i], "Q");    // does set have get method?
         }
         clearSet();
     }

@@ -36,7 +36,7 @@ public void makeDivCard(PrintWriter out, String $name, int $score) {
         <%
         session.setAttribute("setoper", so);
         %>
-        <h1>Redis Voting System - Beta</h1>
+        <h1>Redis Voting System - Redis Tutorial</h1>
 	<div id="navbar">
 		<a href="AddCandidate.jsp">Add candidate</a>
 		<a href="ResetList">Reset Candidate List</a>
